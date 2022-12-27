@@ -1,9 +1,6 @@
 const { Op } = require('sequelize')
 const Planos = require('../models/tb002_plano')
-
 module.exports = class PlanosController {
-
-    
 
     static async GetPlanos(req, res){
 
@@ -51,11 +48,9 @@ module.exports = class PlanosController {
                 }
             })
 
-
             res.status(200).json({
                 data: planos
             })
-
 
         } catch (err){
             res.status(422).json({message: err})
@@ -133,8 +128,7 @@ module.exports = class PlanosController {
             })
         }
 
-        try{
-            
+        try{            
 
             await Planos.destroy( {
                 where: {
@@ -151,6 +145,7 @@ module.exports = class PlanosController {
         }
 
     }
+
     static async AtualizaPlano(req, res){
         
         const { plano, descricao, valor, id_plano  } = req.body
@@ -216,6 +211,5 @@ module.exports = class PlanosController {
         }
 
     }
-
 
 }
