@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('../mysql').pool;
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const UserController = require('../controllers/UserController');
 
 //SMS Service
 const accountSid = "ACe8580af80cb800ddc80c1b690394efec";
@@ -10,6 +9,8 @@ const authToken = "e1cd64c1a30c475e0bad348f7ae24633";
 const client = require("twilio")(accountSid, authToken);
 
 
+router.get('/', UserController.GetClient);
+/* 
 router.get('/', (req, res, next) => {
     mysql.getConnection((error, conn) => {
         if (error) { return res.status(500).send({ error: error }) }
@@ -198,7 +199,7 @@ router.post('/login', (req, res, next) => {
         });
 
     }),
-
+ */
 
 
     module.exports = router;

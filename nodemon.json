@@ -1,10 +1,14 @@
-{
+{   
     "env": {
         "MYSQL_USER" : "root",
         "MYSQL_PASSWORD" : "",
         "MYSQL_DATABASE" : "db_software_precisao",
         "MYSQL_HOST" : "localhost",
         "MYSQL_PORT" : 3306,
+        "USER" : "u623723531_jvitormcs",
+        "PASSWORD" : "QrR6gOmU+u7Q",
+        "DATABASE" : "u623723531_api_teste",
+        "HOST" : "sql803.main-hosting.eu",
         "JWT_KEY" : "segredo" 
     }
 }
