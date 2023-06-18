@@ -40,6 +40,14 @@ const Igreja = conn.define(
       type: Sequelize.STRING,
       allowNull: true,
     },
+    nome_pastor: {
+      type: Sequelize.STRING,
+      allowNull: true,
+    },
+    logo_igreja: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
     id_user: {
       type: Sequelize.INTEGER,
       allowNull: true,

@@ -3,7 +3,6 @@ const { Sequelize, DataTypes } = require("sequelize");
 const conn = require("../data/conn");
 const nivel = require("./tb_nivel");
 
-
 const Usuario = conn.define(
   "tb_usuarios",
   {
@@ -26,6 +25,18 @@ const Usuario = conn.define(
       allowNull: false,
       unique: true,
     },
+    telefone: {
+      type: Sequelize.STRING,
+      allowNull: false,
+    },
+    code: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        isNumeric: true,
+        len: [4, 4],
+      },
+    },
     senha: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -42,13 +53,10 @@ const Usuario = conn.define(
   { freezeTableName: true }
 );
 
-
-
 Usuario.belongsTo(nivel, {
   foreignKey: "id_nivel",
   constraints: true,
   foreignKeyConstraint: "id_nivel",
 });
-
 
 module.exports = Usuario;

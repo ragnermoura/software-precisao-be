@@ -19,6 +19,7 @@ async function postCadastro(req, res, next) {
       nome: req.body.nome,
       sobrenome: req.body.sobrenome,
       email: req.body.email,
+      code: req.body.code,
       senha: senhaHash,
       id_nivel: req.body.nivel,
       id_igreja: req.body.igreja,

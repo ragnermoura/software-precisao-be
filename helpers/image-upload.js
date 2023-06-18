@@ -9,9 +9,9 @@ const imageStorage = multer.diskStorage({
     console.log(req)
 
     if (req.baseUrl.includes('usuario')) {
-      folder = "usuarios";
-    } else if (req.baseUrl.includes('membro')) {
-      folder = "foto";
+      folder = "avatar";
+    } else if (req.baseUrl.includes('igreja')) {
+      folder = "logo";
     }
     cb(null, `public/images/${folder}/`);
   },

@@ -1,15 +1,21 @@
 const Igreja = require("../models/tb_igreja");
+const { imageUpload } = require("../helpers/image-upload");
 
 async function postIgreja(req, res, next) {
   try {
+
+    await imageUpload.single("imagem")(req, res, next);
+
     const igreja = await Igreja.create({
       razao_social: req.body.razao_social,
-      cnpj: req.body.razao_social,
+      cnpj: req.body.cnpj,
       endereco: req.body.endereco,
       email: req.body.email,
       telefone1: req.body.telefone1,
       telefone2: req.body.telefone2,
       qtd_membros: req.body.qtd_membros,
+      nome_pastor: req.body.pastor,
+      logo: req.file.filename,
       id_user: req.body.id_user,
     });
 
@@ -41,9 +47,7 @@ async function deleteIgreja(req, res, next) {
       return res.status(404).send({ mensagem: "Igreja não encontrada." });
     }
     await igreja.destroy();
-    return res
-      .status(202)
-      .send({ mensagem: "Igreja excluída com sucesso!" });
+    return res.status(202).send({ mensagem: "Igreja excluída com sucesso!" });
   } catch (error) {
     return res.status(500).send({ error: error.message });
   }
