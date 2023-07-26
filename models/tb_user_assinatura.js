@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const conn = require("../db/conn");
-const usuario = require("./tb_usuario");
+const conn = require('../data/conn')
+const usuario = require("./tb_usuarios");
 const Plano = require("./tb_planos");
 
 const Assinatura_User = conn.define(

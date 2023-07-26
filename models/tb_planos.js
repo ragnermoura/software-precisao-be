@@ -1,5 +1,5 @@
 const { Sequelize, DataTypes } = require("sequelize");
-const conn = require("../db/conn");
+const conn = require('../data/conn')
 
 const Plano = conn.define(
   "plano",
