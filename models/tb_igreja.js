@@ -52,6 +52,11 @@ const Igreja = conn.define(
       type: Sequelize.INTEGER,
       allowNull: true,
     },
+    status: {
+      type: DataTypes.CHAR(1),
+      defaultValue: 'A',
+      allowNull: false
+  }
   },
   { freezeTableName: true }
 );

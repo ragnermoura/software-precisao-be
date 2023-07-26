@@ -38,6 +38,11 @@ const Perfil = conn.define(
       type: Sequelize.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.CHAR(1),
+      defaultValue: 'A',
+      allowNull: false
+  }
   },
   { freezeTableName: true }
 );
@@ -49,4 +54,4 @@ Perfil.belongsTo(Usuarios, {
 });
 
 
-module.exports = Usuarios;
+module.exports = Perfil;

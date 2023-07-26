@@ -14,6 +14,11 @@ const Nivel = conn.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    status: {
+      type: DataTypes.CHAR(1),
+      defaultValue: 'A',
+      allowNull: false
+  }
   },
   { freezeTableName: true }
 );
