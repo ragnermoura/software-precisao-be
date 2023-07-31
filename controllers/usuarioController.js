@@ -1,3 +1,4 @@
+const transporter  = require("../helpers/transporter");
 const Usuario = require("../models/tb_usuarios");
 const bcrypt = require("bcrypt");
 
@@ -13,13 +14,46 @@ async function postCadastro(req, res, next) {
       });
     }
 
+    function gerarNumeroQuatroDigitos() {
+      // Gera um número aleatório entre 0 e 9999
+      let numero = (Math.random() * 10000).toFixed(0);
+    
+      // Se o número gerado tiver menos de quatro dígitos, gera um novo número
+      while (numero.length < 4) {
+        numero = (Math.random() * 10000).toFixed(0);
+      }
+    
+      return numero;
+    }
+    
+    // Exemplo de uso
+    const numeroAleatorio = gerarNumeroQuatroDigitos();
+    console.log(numeroAleatorio);
+    
+
+    transporter.sendMail({
+      from: 'noreply <noreply@softwareprecisao.com.br>',
+      to: req.body.email,
+      subject: 'Seu código de verificação',
+      text: 'Código de verificação',
+      html: `
+
+      <ul>
+      <li>email: ${numeroAleatorio}</li>
+=      </ul>
+
+          `
+      })
+
+
+
     const senhaHash = await bcrypt.hash(req.body.senha, 10);
 
     const novoUsuario = await Usuario.create({
       nome: req.body.nome,
       sobrenome: req.body.sobrenome,
       email: req.body.email,
-      code: req.body.code,
+      code: numeroAleatorio,
       senha: senhaHash,
       id_nivel: req.body.nivel,
       id_igreja: req.body.igreja,
@@ -35,10 +69,8 @@ async function postCadastro(req, res, next) {
           sobrenome: novoUsuario.sobrenome,
           email: novoUsuario.email,
           nivel: novoUsuario.id_nivel,
-          request: {
-            tipo: "GET",
-            descricao: "Pesquisa um usuário",
-          },
+          
+          
         },
       },
     };

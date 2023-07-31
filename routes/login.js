@@ -42,7 +42,15 @@ const assinatura = await Assinatura_User.findOne({
   }
 })
 
-const reqAssinatura = await fetch(`https://api.pagar.me/core/v5/invoices?subscription_id=${assinatura?.id_assinatura}&page=1&size=10`, {
+const reqAssinatura_fatura = await fetch(`https://api.pagar.me/core/v5/invoices?subscription_id=${assinatura?.id_assinatura}&page=1&size=10`, {
+method: 'GET',
+headers: {
+accept: 'application/json',
+'content-type': 'application/json',
+'Authorization': `Basic ${Buffer.from(process.env.PAGARME_API_KEY + ':').toString('base64')}`
+},
+})
+const reqAssinatura = await fetch(`https://api.pagar.me/core/v5//v5/subscriptions/${assinatura?.id_assinatura}`, {
 method: 'GET',
 headers: {
 accept: 'application/json',
@@ -52,8 +60,9 @@ accept: 'application/json',
 })
 
 
-const verifyPayment = await reqAssinatura?.json()
-console.log('request', reqAssinatura)
+const verifyPayment = await reqAssinatura_fatura?.json()
+const verifySubscribe = await reqAssinatura?.json()
+console.log('request', reqAssinatura_fatura)
 
 
 const {data} = verifyPayment
@@ -64,11 +73,22 @@ return new Date(b?.created_at) - new Date(a?.created_at)
 const invoice = order[0]
 console.log(invoice)
 
-          return res.status(200).send({
-            mensagem: "Autenticado com sucesso!",
-            token: token,
-          });
-        }
+if(invoice?.status === 'paid' || verifySubscribe?.status === 'future'){
+
+
+  return res.status(200).send({
+    success: true,
+    mensagem: "Autenticado com sucesso!",
+    token: token,
+    user_id: user.id_user
+  });
+} else {
+  return res.status(401).send({
+    success: false,
+    mensagem: "Acesso não autorizado, seu pagamento ainda está pendente",
+  });
+}
+}
         return res.status(401).send({ mensagem: "Falha na autenticação." });
       });
     })
